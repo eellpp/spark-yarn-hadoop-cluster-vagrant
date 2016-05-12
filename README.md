@@ -2,9 +2,13 @@ spark-yarn-hadoop-cluster-vagrant
 ============================
 
 # 1. Introduction
-### Vagrant project to spin up a cluster of 4, 64-bit CentOS6.5 Linux virtual machines with Hadoop v2.6.0 and Spark v1.6.1.
+#### Vagrant project to spin up a cluster of 4 nodes with 64-bit CentOS6.5 Linux virtual machines with Hadoop v2.6.0 and Spark v1.6.1.
 
-Ideal for development cluster on a machine with at least 8GB of memory for the VM and tested on MacBook Pro with 16GB of RAM.
+This is suitable as a quick handson and develpoment cluster for playing on the hadoop stack. 
+Memory Requirement: 16GB RAM.
+Tested on MacBook Pro with 16GB of RAM.
+
+Cluster Configuration:
 
 1. node1 : HDFS NameNode + Spark Master
 2. node2 : YARN ResourceManager + JobHistoryServer + ProxyServer

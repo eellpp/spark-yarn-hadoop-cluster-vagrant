@@ -1,0 +1,6 @@
+resources/*.tar.gz
+resources/*.tgz
+.vagrant/*
+.DS_store
+resources/.DS_store
+data

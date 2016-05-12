@@ -26,7 +26,12 @@ Cluster Configuration:
 # 3. Downlooads
 1. [Download and install VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 2. [Download and install Vagrant](http://www.vagrantup.com/downloads.html).
-3. Run ```vagrant box add centos65 https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box 
+3. Create the vagrant box
+
+```
+vagrant box add centos65 https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box 
+```
+
 4. Git clone this project, and change directory (cd) into this project (directory).
 5. [Download Hadoop 2.6 into the /resources directory ] 
 6. [Download Spark 1.6.1 into the /resources directory]

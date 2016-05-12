@@ -36,77 +36,108 @@ Cluster Configuration:
 # 4. Modifying scripts for adapting to your environment
 You need to modify the scripts to adapt the VM setup to your environment and the version of the downloads  
 
-1. Vagrant File 
-
-./Vagrantfile  
+1. `./Vagrantfile`  
 
 - To add/remove slaves, change the number of nodes:  
-line 5: ```numNodes = 4```  
+
+```
+numNodes = 4
+```  
 
 - To modify VM memory change the following line:  
-line 13: ```v.customize ["modifyvm", :id, "--memory", "1024"]```  
 
-3. /scripts/common.sh  
+```
+v.customize ["modifyvm", :id, "--memory", "1024"]
+```
 
-- Java :Based on the version you have to change this as follows
-```JAVA_ARCHIVE=jdk-8u91-linux-x64.tar.gz```
+2. `/scripts/common.sh`  
+  Java :Based on the version you have to change this as follows
 
-- Hadoop: To use a different version of Hadoop you've already downloaded to /resources directory, change the following line:  
-```HADOOP_VERSION=hadoop-2.6.0```  
+```
+JAVA_ARCHIVE=jdk-8u91-linux-x64.tar.gz
+```
+
+  Hadoop: To use a different version of Hadoop you've already downloaded to /resources directory, change the following line:  
+
+```
+HADOOP_VERSION=hadoop-2.6.0
+```  
+
 To use a different version of Hadoop to be downloaded, change the remote URL in the following line:  
-```HADOOP_MIRROR_DOWNLOAD=http://apache.crihan.fr/dist/hadoop/common/stable/hadoop-2.6.0.tar.gz```  
 
-- Spark: To use a different version of Spark, change the following lines:  
-```SPARK_VERSION=spark-1.6.1```  
-```SPARK_ARCHIVE=$SPARK_VERSION-bin-hadoop2.6.tgz```  
-```SPARK_ARCHIVE_DIR=$SPARK_VERSION-bin-hadoop2.6
-```SPARK_MIRROR_DOWNLOAD=../resources/spark-1.6.1-bin-hadoop2.6.tgz```  
+```
+HADOOP_MIRROR_DOWNLOAD=http://apache.crihan.fr/dist/hadoop/common/stable/hadoop-2.6.0.tar.gz
+```  
 
-3. /scripts/setup-java.sh  
+Spark: To use a different version of Spark, change the following lines:  
+
+```
+SPARK_VERSION=spark-1.6.1
+SPARK_ARCHIVE=$SPARK_VERSION-bin-hadoop2.6.tgz  
+SPARK_ARCHIVE_DIR=$SPARK_VERSION-bin-hadoop2.6
+SPARK_MIRROR_DOWNLOAD=../resources/spark-1.6.1-bin-hadoop2.6.tgz
+
+```  
+
+3. `/scripts/setup-java.sh`  
 To install from Java downloaded locally in /resources directory, if different from default version (jdk1.8.0_91), change the version in the following line:  
-```ln -s /usr/local/jdk1.8.0_91 /usr/local/java```  
-```yum install -y jdk-8u25-linux-i586```  
 
-4. /scripts/setup-centos-ssh.sh  
+```
+ln -s /usr/local/jdk1.8.0_91 /usr/local/java
+yum install -y jdk-8u25-linux-i586
+```
+
+
+4. `/scripts/setup-centos-ssh.sh`  
 To modify the version of sshpass to use, change the following lines within the function installSSHPass():  
-```wget http://pkgs.repoforge.org/sshpass/sshpass-1.05-1.el6.rf.i686.rpm```  
-```rpm -ivh sshpass-1.05-1.el6.rf.i686.rpm```  
 
-5. /scripts/setup-spark.sh  
+```
+wget http://pkgs.repoforge.org/sshpass/sshpass-1.05-1.el6.rf.i686.rpm
+rpm -ivh sshpass-1.05-1.el6.rf.i686.rpm
+```  
+
+5. `/scripts/setup-spark.sh`  
 To modify the version of Spark to be used, if different from default version (built for Hadoop2.6), change the version suffix in the following line:  
-```ln -s /usr/local/$SPARK_VERSION-bin-hadoop2.6 /usr/local/spark```  
+
+```
+ln -s /usr/local/$SPARK_VERSION-bin-hadoop2.6 /usr/local/spark
+```  
 
 # 3. Getting Started
-- Run ```vagrant up``` to create the VM.
-- Run ```vagrant ssh``` to get into your VM.
-- Run ```vagrant halt``` to gracefully shutdown the VM's. You can later startup the cluster with ```vagrant up``` but have to repeat the #5 Post Provisioning again.
-- Run ```vagrant destroy``` when you want to destroy and get rid of the VM to free up your disk space.
+- Run `vagrant up` to create the VM.
+- Run `vagrant ssh` to get into your VM.
+- Run `vagrant halt` to gracefully shutdown the VM's. You can later startup the cluster with `vagrant up` but have to repeat the #5 Post Provisioning again.
+- Run `vagrant destroy` when you want to destroy and get rid of the VM to free up your disk space.
 
 # 5. Post Provisioning
 After you have provisioned the cluster, you need to run some commands to initialize your Hadoop cluster. 
 
-- SSH into node1 using  ```vagrant ssh node-1```
+- SSH into node1 using  `vagrant ssh node-1`
 
 Commands below require root permissions. 
 
-- Change to root access using ```sudo su``` (or create a new user and grant permissions if you want to use a non-root access. In such a case, you'll need to do this on VMs)
+- Change to root access using `sudo su` (or create a new user and grant permissions if you want to use a non-root access. In such a case, you'll need to do this on VMs)
 
-Issue the following command. 
+##### 5.1 Issue the following command at node1. 
 
-1. $HADOOP_PREFIX/bin/hdfs namenode -format myhadoop
+```
+$HADOOP_PREFIX/bin/hdfs namenode -format myhadoop
 
 ## Start Hadoop Daemons (HDFS + YARN)
-SSH into node1 and issue the following commands to start HDFS.
 
 1. $HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs start namenode
 2. $HADOOP_PREFIX/sbin/hadoop-daemons.sh --config $HADOOP_CONF_DIR --script hdfs start datanode
 
-SSH into node2 and issue the following commands to start YARN.
+```
 
+##### 5.2 SSH into node2 and issue the following commands to start YARN.
+
+```
 1. $HADOOP_YARN_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR start resourcemanager
 2. $HADOOP_YARN_HOME/sbin/yarn-daemons.sh --config $HADOOP_CONF_DIR start nodemanager
 3. $HADOOP_YARN_HOME/sbin/yarn-daemon.sh start proxyserver --config $HADOOP_CONF_DIR
 4. $HADOOP_PREFIX/sbin/mr-jobhistory-daemon.sh start historyserver --config $HADOOP_CONF_DIR
+```
 
 ### Test YARN
 Run the following command to make sure you can run a MapReduce job.
@@ -122,6 +153,7 @@ SSH into node1 and issue the following command.
 
 ### Test Spark on YARN
 You can test if Spark can run on YARN by issuing the following command. Try NOT to run this command on the slave nodes.
+
 ```
 $SPARK_HOME/bin/spark-submit --class org.apache.spark.examples.SparkPi \
     --master yarn-cluster \

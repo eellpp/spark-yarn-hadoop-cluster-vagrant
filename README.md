@@ -165,12 +165,14 @@ yarn jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.
 ```
 
 ## Start Spark in Standalone Mode
-SSH into node1 and issue the following command.
+SSH into node1 (spark master) and issue the following command
 
-1. $SPARK_HOME/sbin/start-all.sh
+```
+$SPARK_HOME/sbin/start-all.sh
+```
 
 ### Test Spark on YARN
-You can test if Spark can run on YARN by issuing the following command. Try NOT to run this command on the slave nodes.
+You can test if Spark can run on YARN by issuing the following command from the spark master node (node-1)
 
 ```
 $SPARK_HOME/bin/spark-submit --class org.apache.spark.examples.SparkPi \

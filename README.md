@@ -2,9 +2,9 @@ spark-yarn-hadoop-cluster-vagrant
 ============================
 
 # 1. Introduction
-#### Vagrant project to spin up a cluster of 4 nodes with 64-bit CentOS6.5 Linux virtual machines with Hadoop v2.6.0 and Spark v1.6.1.
+#### Vagrant project to spin up a cluster of 4 nodes with 64-bit CentOS6.5 Linux virtual machines with Hadoop v2.6.0, Spark v1.6.1. and Hive v1.2.1
 
-This is suitable as a quick handson and develpoment cluster for playing on the hadoop stack. 
+This is suitable as a quick hands-on and develpoment cluster for playing on the hadoop stack. 
 Memory Requirement: 16GB RAM.
 Tested on MacBook Pro with 16GB of RAM.
 
@@ -14,6 +14,8 @@ Cluster Configuration:
 2. node2 : YARN ResourceManager + JobHistoryServer + ProxyServer
 3. node3 : HDFS DataNode + YARN NodeManager + Spark Slave
 4. node4 : HDFS DataNode + YARN NodeManager + Spark Slave
+
+Hive is installed on all nodes
 
 # 2. Prerequisites 
 1. At least 2GB memory for each VM node. Default script is for 4 nodes, so you need 8GB for the nodes, in addition to the memory for your host machine.
@@ -36,6 +38,7 @@ vagrant box add centos65 https://github.com/2creatives/vagrant-centos/releases/d
 5. [Download Hadoop 2.6 into the /resources directory ] 
 6. [Download Spark 1.6.1 into the /resources directory]
 7. [Download Java 1.8 into the /resources directory]
+7. [Download Hive 1.2.1 into the /resources directory]
 
 
 # 4. Modifying scripts for adapting to your environment
@@ -83,6 +86,16 @@ SPARK_ARCHIVE_DIR=$SPARK_VERSION-bin-hadoop2.6
 SPARK_MIRROR_DOWNLOAD=../resources/spark-1.6.1-bin-hadoop2.6.tgz
 
 ```  
+
+Hive: To use a different version of Hive, change the following lines
+
+```
+HIVE_VERSION=hive-1.2.1
+HIVE_ARCHIVE=apache-hive-1.2.1-bin.tar.gz
+HIVE_ARCHIVE_DIR=apache-hive-1.2.1-bin
+HIVE_MIRROR_DOWNLOAD=../resources/apache-hive-1.2.1-bin.tar.gz
+```
+
 
 3. `/scripts/setup-java.sh`  
 To install from Java downloaded locally in /resources directory, if different from default version (jdk1.8.0_91), change the version in the following line:  

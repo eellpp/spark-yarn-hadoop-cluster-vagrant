@@ -17,6 +17,14 @@ SPARK_ARCHIVE_DIR=$SPARK_VERSION-bin-hadoop2.6
 SPARK_MIRROR_DOWNLOAD=../resources/spark-1.6.1-bin-hadoop2.6.tgz
 SPARK_RES_DIR=/vagrant/resources/spark
 SPARK_CONF_DIR=/usr/local/spark/conf
+
+#hive
+HIVE_VERSION=hive-1.2.1
+HIVE_PREFIX=/usr/local/hive
+HIVE_ARCHIVE=apache-hive-1.2.1-bin.tar.gz
+HIVE_ARCHIVE_DIR=apache-hive-1.2.1-bin
+HIVE_MIRROR_DOWNLOAD=../resources/apache-hive-1.2.1-bin.tar.gz
+HIVE_RES_DIR=/vagrant/resources/hive
 #ssh
 SSH_RES_DIR=/vagrant/resources/ssh
 RES_SSH_COPYID_ORIGINAL=$SSH_RES_DIR/ssh-copy-id.original
